@@ -20,6 +20,7 @@ class DetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         addSubview(label)
+        setConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {

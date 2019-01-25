@@ -10,6 +10,8 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    
+     public var messagetyped = ""
     let mainView = MainView()
     
     
@@ -17,19 +19,32 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(mainView)
-        
+        mainView.textField.delegate = self
+        mainView.delegate = self
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
-
+extension MainViewController: mainViewDelegate {
+    func textMessage(message: String) {
+        self.messagetyped = message
+    }
+    
+    
+    func segue() {
+        let message = DetailViewController.init(message: messagetyped )
+        navigationController?.pushViewController(message, animated: true)
+    }
+}
+    
+extension MainViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = textField.text {
+            mainView.delegate?.textMessage(message: text)
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+}

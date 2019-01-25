@@ -9,6 +9,7 @@
 import UIKit
 
 protocol mainViewDelegate: AnyObject {
+    func textMessage(message: String)
     func segue()
 }
 
@@ -16,11 +17,17 @@ protocol mainViewDelegate: AnyObject {
 class MainView: UIView {
 
     
+   
+    weak var delegate: mainViewDelegate?
+    
+    
     lazy var textField: UITextField = {
         let text = UITextField()
         text.backgroundColor = .white
+        text.addTarget(self, action: #selector(textfunc), for: .touchUpInside)
         return text
     }()
+    
     
     
     
@@ -37,10 +44,12 @@ class MainView: UIView {
     
     
     @objc func segue() {
-        delegate?.segue
+        delegate?.segue()
     }
     
-    
+    @objc func textfunc() {
+        
+    }
     
     
     override init(frame: CGRect) {
